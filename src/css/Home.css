@@ -1,0 +1,29 @@
+.tagline {
+  text-align: center;
+  padding: 20px;
+  color:rgb(67, 80, 45)
+}
+
+.products {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px;
+}
+
+.categories {
+  text-align: center;
+}
+
+.category-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  
+}
+
+footer {
+  background-color: #46b85b;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
