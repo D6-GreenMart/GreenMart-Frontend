@@ -1,12 +1,24 @@
 // src/context/AuthContext.jsx
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  // Optionally, initialize state from localStorage if needed.
-  const [authData, setAuthData] = useState(null);
+  // Initialize authData from localStorage if available
+  const [authData, setAuthData] = useState(() => {
+    const storedData = localStorage.getItem('authData');
+    return storedData ? JSON.parse(storedData) : null;
+  });
+
+  // Whenever authData changes, update localStorage accordingly
+  useEffect(() => {
+    if (authData) {
+      localStorage.setItem('authData', JSON.stringify(authData));
+    } else {
+      localStorage.removeItem('authData');
+    }
+  }, [authData]);
 
   return (
     <AuthContext.Provider value={{ authData, setAuthData }}>

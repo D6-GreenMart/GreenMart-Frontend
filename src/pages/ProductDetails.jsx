@@ -22,6 +22,10 @@ const ProductDetails = () => {
   // Get current user from AuthContext
   const { authData } = useContext(AuthContext);
 
+  // Determine if purchase/review options should be shown.
+  // They will be shown only if a user is logged in as a CUSTOMER.
+  const showPurchaseOptions = authData && authData.role === "CUSTOMER";
+
   // Fetch product details
   useEffect(() => {
     fetch(`http://localhost:8080/api/v1/products/${productId}`)
@@ -65,9 +69,8 @@ const ProductDetails = () => {
       .catch((err) => console.error(err));
   }, [productId]);
 
-  // Determine the current user's ID (try both possible fields)
+  // Determine if the current user has already submitted a review for this product
   const currentUserId = authData?.id || authData?.userId;
-  // Check if the current user has already submitted a review for this product
   const hasReviewed = currentUserId
     ? reviews.some((review) => String(review.userId) === String(currentUserId))
     : false;
@@ -206,7 +209,7 @@ const ProductDetails = () => {
               <p>{product.description}</p>
               {product.price && (
                 <p>
-                  <strong>Price:</strong> ${product.price}
+                  <strong>Price:</strong> ₹{product.price}
                 </p>
               )}
               {/* Display average rating if available */}
@@ -221,69 +224,76 @@ const ProductDetails = () => {
                   <span>No ratings yet</span>
                 )}
               </div>
-              <div className="mb-3">
-                <label htmlFor="quantity" className="form-label">
-                  Quantity:
-                </label>
-                <input
-                  type="number"
-                  id="quantity"
-                  className="form-control"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                  min="1"
-                />
-              </div>
-              <button className="btn btn-primary" onClick={handleAddToCart}>
-                Add to Cart
-              </button>
+              {/* Only show purchase options if logged in as CUSTOMER */}
+              {showPurchaseOptions && (
+                <>
+                  <div className="mb-3">
+                    <label htmlFor="quantity" className="form-label">
+                      Quantity:
+                    </label>
+                    <input
+                      type="number"
+                      id="quantity"
+                      className="form-control"
+                      value={quantity}
+                      onChange={(e) => setQuantity(e.target.value)}
+                      min="1"
+                    />
+                  </div>
+                  <button className="btn btn-primary" onClick={handleAddToCart}>
+                    Add to Cart
+                  </button>
+                </>
+              )}
             </div>
           </div>
 
           {/* Add Review Section */}
-          <div className="mt-5">
-            <h3>Add a Review</h3>
-            {authData && hasReviewed ? (
-              <p>You have already submitted a review for this product.</p>
-            ) : (
-              <form onSubmit={handleSubmitReview}>
-                <div className="mb-3">
-                  <label className="form-label">Rating:</label>
-                  <div>
-                    {[1, 2, 3, 4, 5].map((star) => (
-                      <span
-                        key={star}
-                        onClick={() => setRating(star)}
-                        style={{
-                          fontSize: '1.5rem',
-                          cursor: 'pointer',
-                          color: star <= rating ? 'gold' : 'gray',
-                        }}
-                      >
-                        {star <= rating ? '★' : '☆'}
-                      </span>
-                    ))}
+          {showPurchaseOptions && (
+            <div className="mt-5">
+              <h3>Add a Review</h3>
+              {hasReviewed ? (
+                <p>You have already submitted a review for this product.</p>
+              ) : (
+                <form onSubmit={handleSubmitReview}>
+                  <div className="mb-3">
+                    <label className="form-label">Rating:</label>
+                    <div>
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <span
+                          key={star}
+                          onClick={() => setRating(star)}
+                          style={{
+                            fontSize: '1.5rem',
+                            cursor: 'pointer',
+                            color: star <= rating ? 'gold' : 'gray',
+                          }}
+                        >
+                          {star <= rating ? '★' : '☆'}
+                        </span>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="comment" className="form-label">
-                    Comment:
-                  </label>
-                  <textarea
-                    id="comment"
-                    className="form-control"
-                    value={comment}
-                    onChange={(e) => setComment(e.target.value)}
-                    rows="3"
-                    required
-                  ></textarea>
-                </div>
-                <button type="submit" className="btn btn-success">
-                  Submit Review
-                </button>
-              </form>
-            )}
-          </div>
+                  <div className="mb-3">
+                    <label htmlFor="comment" className="form-label">
+                      Comment:
+                    </label>
+                    <textarea
+                      id="comment"
+                      className="form-control"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      rows="3"
+                      required
+                    ></textarea>
+                  </div>
+                  <button type="submit" className="btn btn-success">
+                    Submit Review
+                  </button>
+                </form>
+              )}
+            </div>
+          )}
         </>
       ) : (
         <p>Product not found.</p>

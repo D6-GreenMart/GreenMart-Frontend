@@ -69,7 +69,7 @@ const CategoryProducts = () => {
         <p className="card-text">{product.description}</p>
         {product.price && (
           <p className="card-text">
-            <strong>Price:</strong> ${product.price}
+            <strong>Price:</strong> ₹{product.price}
           </p>
         )}
       </div>
