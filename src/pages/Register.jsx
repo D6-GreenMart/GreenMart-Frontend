@@ -35,7 +35,7 @@ const Register = () => {
       await register(userData);
       toast.success('Registration successful! Please log in.');
       // Delay navigation slightly to let the toast show up
-      setTimeout(() => navigate('/login'), 1500);
+      setTimeout(() => navigate('/login'), 150);
     } catch (error) {
       console.error(error);
       toast.error('Registration failed.');
@@ -43,78 +43,100 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        {/* Name */}
-        <input 
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={userData.name}
-          onChange={handleChange}
-          required
-        />
-        {/* Email */}
-        <input 
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={userData.email}
-          onChange={handleChange}
-          required
-        />
-        {/* Password */}
-        <input 
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={userData.password}
-          onChange={handleChange}
-          required
-        />
-        {/* Address */}
-        <input 
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={userData.address}
-          onChange={handleChange}
-          required
-        />
-        {/* Phone Number */}
-        <input 
-          type="tel"
-          name="phoneNumber"
-          placeholder="Phone Number"
-          value={userData.phoneNumber}
-          onChange={handleChange}
-          required
-        />
-        {/* Image Path (optional) */}
-        <input 
-          type="text"
-          name="imagePath"
-          placeholder="Image Path (optional)"
-          value={userData.imagePath}
-          onChange={handleChange}
-        />
-        {/* Checkbox to register as Vendor */}
-        <div>
-          <input
-            type="checkbox"
-            name="vendorRegistration"
-            id="vendorRegistration"
-            checked={userData.role === 'VENDOR'}
-            onChange={handleCheckboxChange}
-          />
-          <label htmlFor="vendorRegistration">Register as Vendor</label>
+    <div className="container mt-5" style={{ maxWidth: '450px' }}>
+      <div className="card border-success shadow-sm">
+        <div className="card-body">
+          <h2 className="card-title text-center mb-4 text-success">Register</h2>
+          <form onSubmit={handleSubmit}>
+            <div className="mb-3">
+              <input 
+                type="text"
+                name="name"
+                className="form-control"
+                placeholder="Name"
+                value={userData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input 
+                type="email"
+                name="email"
+                className="form-control"
+                placeholder="Email"
+                value={userData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input 
+                type="password"
+                name="password"
+                className="form-control"
+                placeholder="Password"
+                value={userData.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input 
+                type="text"
+                name="address"
+                className="form-control"
+                placeholder="Address"
+                value={userData.address}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input 
+                type="tel"
+                name="phoneNumber"
+                className="form-control"
+                placeholder="Phone Number"
+                value={userData.phoneNumber}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="mb-3">
+              <input 
+                type="text"
+                name="imagePath"
+                className="form-control"
+                placeholder="Image URL (optional)"
+                value={userData.imagePath}
+                onChange={handleChange}
+              />
+            </div>
+            <div className="form-check mb-3">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                name="vendorRegistration"
+                id="vendorRegistration"
+                checked={userData.role === 'VENDOR'}
+                onChange={handleCheckboxChange}
+              />
+              <label className="form-check-label" htmlFor="vendorRegistration">
+                Register as Vendor
+              </label>
+            </div>
+            <div className="d-grid">
+              <button type="submit" className="btn btn-success">
+                Register
+              </button>
+            </div>
+          </form>
+          <p className="text-center mt-3">
+            Already have an account? <Link to="/login" className="text-success">Login here</Link>.
+          </p>
         </div>
-        <button type="submit">Register</button>
-      </form>
-      <p>
-        Already have an account? <Link to="/login">Login here</Link>.
-      </p>
+      </div>
     </div>
   );
 };
