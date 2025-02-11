@@ -44,6 +44,14 @@ const Header = () => {
             <li className="nav-item">
               <Link className="nav-link" to="/orders" style={{ color: '#2e7d32', fontWeight: 'bold' }}>Orders</Link>
             </li>
+            {/* Only show "Add Product" if the logged in user is a vendor */}
+            {authData && authData.role === "VENDOR" && (
+              <li className="nav-item">
+                <Link className="nav-link" to="/vendor/add-product" style={{ color: '#2e7d32', fontWeight: 'bold' }}>
+                  Add Product
+                </Link>
+              </li>
+            )}
           </ul>
           {/* Right side: either user info or Login/Register links */}
           <ul className="navbar-nav ms-auto">

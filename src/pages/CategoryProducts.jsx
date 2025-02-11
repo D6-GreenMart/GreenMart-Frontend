@@ -54,27 +54,28 @@ const CategoryProducts = () => {
         {products.length > 0 ? (
           products.map((product) => (
             <div key={product.id} className="col-md-4 mb-3">
-              <div className="card h-100">
-                {product.imagePath && (
-                  <img
-                    src={product.imagePath}
-                    className="card-img-top"
-                    alt={product.name}
-                    style={{ objectFit: 'cover', height: '200px' }}
-                  />
-                )}
-                <div className="card-body">
-                  <h5 className="card-title">{product.name}</h5>
-                  <p className="card-text">{product.description}</p>
-                  {/* If there's a price property, you can show it here */}
-                  {product.price && (
-                    <p className="card-text">
-                      <strong>Price:</strong> ${product.price}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </div>
+  <Link to={`/products/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+    <div className="card h-100">
+      {product.imagePath && (
+        <img
+          src={product.imagePath}
+          className="card-img-top"
+          alt={product.name}
+          style={{ objectFit: 'cover', height: '200px' }}
+        />
+      )}
+      <div className="card-body">
+        <h5 className="card-title">{product.name}</h5>
+        <p className="card-text">{product.description}</p>
+        {product.price && (
+          <p className="card-text">
+            <strong>Price:</strong> ${product.price}
+          </p>
+        )}
+      </div>
+    </div>
+  </Link>
+</div>
           ))
         ) : (
           <div className="col-12">

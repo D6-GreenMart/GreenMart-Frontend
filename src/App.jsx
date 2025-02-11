@@ -9,6 +9,10 @@ import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 import Header from './components/Header';
 import CategoryProducts from './pages/CategoryProducts';
+import VendorDashboard from './pages/VendorDashboard';
+import VendorAddProduct from './pages/VendorAddProduct';
+import VendorProductDetails from './pages/VendorProductDetails'
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -25,8 +29,11 @@ const App = () => {
         <Route path="/cart" element={<Cart />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/admin-dashboard" element={<div>Admin Dashboard</div>} />
-        <Route path="/vendor-dashboard" element={<div>Vendor Dashboard</div>} />  
+        <Route path="/vendor-dashboard" element={<VendorDashboard/>} />  
+        <Route path="/vendor/product/:productId" element={<VendorProductDetails />} />
         <Route path="/products/category/:categoryId" element={<CategoryProducts />} />
+        <Route path="/vendor/add-product" element={<VendorAddProduct />} />
+        <Route path="/products/:productId" element={<ProductDetails />} />
       </Routes>
       <ToastContainer 
         position="top-right"
