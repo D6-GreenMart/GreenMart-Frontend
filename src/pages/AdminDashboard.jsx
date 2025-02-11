@@ -1,14 +1,20 @@
 // src/pages/AdminDashboard.jsx
 import { useState, useEffect } from 'react';
-// import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
+  // State for pending products
   const [pendingProducts, setPendingProducts] = useState([]);
   const [loadingPending, setLoadingPending] = useState(true);
-  const [error, setError] = useState(null);
+  const [pendingError, setPendingError] = useState(null);
 
-  // Function to fetch pending products
+  // State for product categories
+  const [categories, setCategories] = useState([]);
+  const [loadingCategories, setLoadingCategories] = useState(true);
+  const [categoriesError, setCategoriesError] = useState(null);
+
+  // Fetch pending products
   const fetchPendingProducts = async () => {
     try {
       const response = await fetch('http://localhost:8080/api/v1/products/pending', {
@@ -24,15 +30,38 @@ const AdminDashboard = () => {
       setPendingProducts(data);
     } catch (err) {
       console.error(err);
-      setError(err.message);
+      setPendingError(err.message);
     } finally {
       setLoadingPending(false);
     }
   };
 
-  // Fetch pending products on component mount
+  // Fetch product categories
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/api/v1/categories', {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error(`Error fetching categories: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log('Fetched categories:', data);
+      setCategories(data);
+    } catch (err) {
+      console.error(err);
+      setCategoriesError(err.message);
+    } finally {
+      setLoadingCategories(false);
+    }
+  };
+
+  // Fetch data on mount
   useEffect(() => {
     fetchPendingProducts();
+    fetchCategories();
   }, []);
 
   // Handler to update product status (approve or reject)
@@ -66,29 +95,23 @@ const AdminDashboard = () => {
     }
   };
 
-  if (loadingPending) {
-    return (
-      <div className="container mt-5">
-        <p>Loading pending products...</p>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="container mt-5">
-        <div className="alert alert-danger" role="alert">
-          {error}
-        </div>
-      </div>
-    );
-  }
+  // Helper to format dates
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleString();
+  };
 
   return (
     <div className="container mt-5">
       <h2>Pending Products</h2>
-      {pendingProducts.length > 0 ? (
-        <div className="table-responsive">
+      {loadingPending ? (
+        <p>Loading pending products...</p>
+      ) : pendingError ? (
+        <div className="alert alert-danger" role="alert">
+          {pendingError}
+        </div>
+      ) : pendingProducts.length > 0 ? (
+        <div className="table-responsive mb-5">
           <table className="table table-striped">
             <thead className="table-light">
               <tr>
@@ -143,6 +166,50 @@ const AdminDashboard = () => {
         </div>
       ) : (
         <p>No pending products found.</p>
+      )}
+
+      <h2>Product Categories</h2>
+      {loadingCategories ? (
+        <p>Loading categories...</p>
+      ) : categoriesError ? (
+        <div className="alert alert-danger" role="alert">
+          {categoriesError}
+        </div>
+      ) : categories.length > 0 ? (
+        <div className="row">
+          {categories.map((category) => (
+            <div key={category.id} className="col-md-4 mb-3">
+              <Link
+                to={`/products/category/${category.id}`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <div className="card h-100">
+                  {category.imagePath && (
+                    <img
+                      src={category.imagePath}
+                      className="card-img-top"
+                      alt={category.name}
+                      style={{ objectFit: 'cover', height: '200px' }}
+                    />
+                  )}
+                  <div className="card-body">
+                    <h5 className="card-title">{category.name}</h5>
+                    <p className="card-text">{category.description}</p>
+                  </div>
+                  <div className="card-footer">
+                    <small className="text-muted">
+                      {category.productCount} products
+                    </small>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="col-12">
+          <p>No categories available.</p>
+        </div>
       )}
     </div>
   );
