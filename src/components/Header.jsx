@@ -6,23 +6,16 @@ import { AuthContext } from '../context/AuthContext';
 const Header = () => {
   const { authData } = useContext(AuthContext);
 
-  // Debug: log authData whenever it changes
+  // Debug: log authData when it changes
   useEffect(() => {
     console.log("Auth data in Header:", authData);
   }, [authData]);
 
   return (
-    <nav
-      className="navbar navbar-expand-lg navbar-light bg-light"
-      style={{ borderBottom: '1px solid #ccc', padding: '1rem' }}
-    >
+    <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ borderBottom: '1px solid #ccc', padding: '1rem' }}>
       <div className="container">
         {/* Brand */}
-        <Link
-          className="navbar-brand"
-          to="/"
-          style={{ fontSize: '2rem', color: '#2e7d32' }}
-        >
+        <Link className="navbar-brand" to="/" style={{ fontSize: '2rem', color: '#2e7d32' }}>
           GreenMart
         </Link>
         <button 
@@ -37,81 +30,30 @@ const Header = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
-          {/* Left navigation links */}
+          {/* Left nav links */}
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <Link 
-                className="nav-link" 
-                to="/" 
-                style={{ color: '#2e7d32', fontWeight: 'bold' }}
-              >
-                Home
-              </Link>
+              <Link className="nav-link" to="/" style={{ color: '#2e7d32', fontWeight: 'bold' }}>Home</Link>
             </li>
             <li className="nav-item">
-              <Link 
-                className="nav-link" 
-                to="/products" 
-                style={{ color: '#2e7d32', fontWeight: 'bold' }}
-              >
-                Products
-              </Link>
+              <Link className="nav-link" to="/products" style={{ color: '#2e7d32', fontWeight: 'bold' }}>Products</Link>
             </li>
             <li className="nav-item">
-              <Link 
-                className="nav-link" 
-                to="/cart" 
-                style={{ color: '#2e7d32', fontWeight: 'bold' }}
-              >
-                Cart
-              </Link>
+              <Link className="nav-link" to="/cart" style={{ color: '#2e7d32', fontWeight: 'bold' }}>Cart</Link>
             </li>
             <li className="nav-item">
-              <Link 
-                className="nav-link" 
-                to="/orders" 
-                style={{ color: '#2e7d32', fontWeight: 'bold' }}
-              >
-                Orders
-              </Link>
+              <Link className="nav-link" to="/orders" style={{ color: '#2e7d32', fontWeight: 'bold' }}>Orders</Link>
             </li>
-            {/* Vendor-specific link */}
+            {/* Only show "Add Product" if the logged in user is a vendor */}
             {authData && authData.role === "VENDOR" && (
               <li className="nav-item">
-                <Link 
-                  className="nav-link" 
-                  to="/vendor/add-product" 
-                  style={{ color: '#2e7d32', fontWeight: 'bold' }}
-                >
+                <Link className="nav-link" to="/vendor/add-product" style={{ color: '#2e7d32', fontWeight: 'bold' }}>
                   Add Product
                 </Link>
               </li>
             )}
-            {/* Admin-specific links */}
-            {authData && authData.role === "ADMIN" && (
-              <>
-                <li className="nav-item">
-                  <Link 
-                    className="nav-link" 
-                    to="/admin/add-category" 
-                    style={{ color: '#2e7d32', fontWeight: 'bold' }}
-                  >
-                    Add Category
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link 
-                    className="nav-link" 
-                    to="/admin/pending-orders" 
-                    style={{ color: '#2e7d32', fontWeight: 'bold' }}
-                  >
-                    Pending Orders
-                  </Link>
-                </li>
-              </>
-            )}
           </ul>
-          {/* Right side: user info or Login/Register links */}
+          {/* Right side: either user info or Login/Register links */}
           <ul className="navbar-nav ms-auto">
             {authData && authData.name ? (
               <li className="nav-item d-flex align-items-center">
@@ -128,32 +70,17 @@ const Header = () => {
                     style={{ width: '40px', height: '40px' }}
                   ></div>
                 )}
-                <span 
-                  className="nav-link" 
-                  style={{ fontWeight: 'bold', color: '#2e7d32' }}
-                >
+                <span className="nav-link" style={{ fontWeight: 'bold', color: '#2e7d32' }}>
                   {authData.name}
                 </span>
               </li>
             ) : (
               <>
                 <li className="nav-item">
-                  <Link 
-                    className="nav-link" 
-                    to="/login" 
-                    style={{ color: '#2e7d32', fontWeight: 'bold' }}
-                  >
-                    Login
-                  </Link>
+                  <Link className="nav-link" to="/login" style={{ color: '#2e7d32', fontWeight: 'bold' }}>Login</Link>
                 </li>
                 <li className="nav-item">
-                  <Link 
-                    className="nav-link" 
-                    to="/register" 
-                    style={{ color: '#2e7d32', fontWeight: 'bold' }}
-                  >
-                    Register
-                  </Link>
+                  <Link className="nav-link" to="/register" style={{ color: '#2e7d32', fontWeight: 'bold' }}>Register</Link>
                 </li>
               </>
             )}
