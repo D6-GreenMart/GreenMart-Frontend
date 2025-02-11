@@ -1,8 +1,16 @@
-# React + Vite
+# GreenMart
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Description
+This is the frontend of our final cdac project 'GreenMart'
 
-Currently, two official plugins are available:
+## Links
+For the backend please go here<br>
+https://github.com/D6-GreenMart/GreenMart-Backend<br><br>
+For the project documentation please go here<br>
+https://drive.google.com/file/d/1H6oIPP48zm1A4mCptkiUe8_rTSrzwNHO/view?usp=sharing<br>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Instruction
+To run the webapp use the following command<br>
+```bash
+npm install
+npm run dev
