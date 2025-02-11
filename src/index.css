@@ -1,13 +1,109 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+/* index.css */
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body Styles */
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fdfdfd;
+    color: #333;
+    line-height: 1.6;
+    padding: 0 1rem;
+  }
+  
+  /* Anchor Tags */
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  /* Global Container */
+  .container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 0;
+  }
+  
+  /* Header Styling */
+  header {
+    background-color: #e8f5e9; /* Light green background for organic feel */
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Navigation Styles */
+  nav a {
+    margin-right: 1rem;
+    font-weight: bold;
+    color: #2e7d32; /* Darker green for links */
+  }
+  
+  /* Footer Styling */
+  footer {
+    background-color: #e8f5e9;
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    margin-top: 2rem;
+  }
+  
+  /* Headings */
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0.5rem;
+    color: #2e7d32;
+  }
+  
+  /* Paragraphs */
+  p {
+    margin-bottom: 1rem;
+  }
+  
+  /* Button Styles */
+  button {
+    background-color: #2e7d32;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:hover {
+    background-color: #1b5e20;
+  }
+  
+  /* Product Card Example */
+  .product-card {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-card h3 {
+    margin-bottom: 0.5rem;
+  }
+  
+  .product-card p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+  }
+  
